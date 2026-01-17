@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "created_at": "2026-01-17T00:00:00Z",
+  "updated_at": "2026-01-17T00:00:00Z",
+  "name": "Create Image",
+  "author": {
+    "name": "Freeway Team",
+    "url": "https://tryfreeway.com",
+    "email": "getintouch@tryfreeway.com"
+  },
+  "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/openai-image-generator",
+  "contributors": [
+    "tryfreeway"
+  ],
+  "compatibility": [],
+  "categories": [
+    "Image Generation"
+  ],
+  "tags": [
+    "openai",
+    "image"
+  ],
+  "description": "Generate images using OpenAI and copy them to clipboard. Say 'Create image [description]'.",
+  "instructions": "Get your OpenAI API key: https://platform.openai.com/api-keys\n\nUsage: Say 'Create image a beautiful sunset over mountains' to generate an image.\n\nThe image will be copied to your clipboard, ready to paste (Cmd+V).",
+  "hooks": ["before_paste"],
+  "dependencies": [],
+  "trigger": {
+    "pattern": "Create image",
+    "matchType": "startsWith"
+  },
+  "settings": [
+    {
+      "type": "input",
+      "name": "api_key",
+      "label": "OpenAI API key",
+      "placeholder": "sk-...",
+      "required": true
+    },
+    {
+      "type": "input",
+      "name": "model",
+      "label": "Model",
+      "default": "gpt-image-1.5",
+      "help_text": "OpenAI image model (e.g., gpt-image-1.5, gpt-image-1)"
+    },
+    {
+      "type": "input",
+      "name": "prompt_prefix",
+      "label": "Prompt prefix",
+      "rows": 3,
+      "default": "",
+      "help_text": "Optional text to prepend to every image prompt (e.g., 'High quality, detailed, ')"
+    },
+    {
+      "type": "select",
+      "name": "size",
+      "label": "Image size",
+      "default": "1024x1024",
+      "options": [
+        {"value": "1024x1024", "label": "1024×1024 (Square)"},
+        {"value": "1024x1536", "label": "1024×1536 (Portrait)"},
+        {"value": "1536x1024", "label": "1536×1024 (Landscape)"}
+      ]
+    },
+    {
+      "type": "select",
+      "name": "quality",
+      "label": "Quality",
+      "default": "medium",
+      "options": [
+        {"value": "low", "label": "Low (Fastest)"},
+        {"value": "medium", "label": "Medium"},
+        {"value": "high", "label": "High (Best)"}
+      ]
+    }
+  ]
+}

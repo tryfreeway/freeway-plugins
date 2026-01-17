@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "created_at": "2026-01-17T00:00:00Z",
+  "updated_at": "2026-01-17T00:00:00Z",
+  "name": "Convert to Markdown",
+  "author": {
+    "name": "Freeway Team",
+    "url": "https://tryfreeway.com",
+    "email": "getintouch@tryfreeway.com"
+  },
+  "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/openai-markdown-converter",
+  "contributors": [
+    "tryfreeway"
+  ],
+  "compatibility": [],
+  "categories": [
+    "Text Processing"
+  ],
+  "tags": [
+    "openai",
+    "text-formatter"
+  ],
+  "description": "Convert your transcribed text to well-formatted Markdown syntax using OpenAI.",
+  "instructions": "Get your OpenAI API key: https://platform.openai.com/api-keys\n\nThe prompt should include {text}, which will be replaced with your transcribed text after removing the trigger phrase.",
+  "hooks": ["before_paste"],
+  "dependencies": [],
+  "trigger": {
+    "pattern": "Convert to MarkDown",
+    "matchType": "startsWith"
+  },
+  "settings": [
+    {
+      "type": "input",
+      "name": "api_key",
+      "label": "OpenAI API key",
+      "placeholder": "sk-...",
+      "required": true
+    },
+    {
+      "type": "input",
+      "name": "model",
+      "label": "Model",
+      "default": "gpt-5-mini",
+      "help_text": "OpenAI model to use (e.g., gpt-5-mini, gpt-4o-mini, gpt-4o)"
+    },
+    {
+      "type": "input",
+      "name": "prompt",
+      "label": "Prompt",
+      "rows": 6,
+      "default": "Convert the following text to well-formatted Markdown syntax. Output only the Markdown, nothing else.\n\nText:\n{text}",
+      "help_text": "The substring {text} will be replaced by the transcribed text (after the trigger)."
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "created_at": "2026-01-17T00:00:00Z",
+  "updated_at": "2026-01-17T00:00:00Z",
+  "name": "Translate Selection",
+  "author": {
+    "name": "Freeway Team",
+    "url": "https://tryfreeway.com",
+    "email": "getintouch@tryfreeway.com"
+  },
+  "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/openai-selection-translator",
+  "contributors": [
+    "tryfreeway"
+  ],
+  "compatibility": [],
+  "categories": [
+    "Text Processing",
+    "Translation"
+  ],
+  "tags": [
+    "openai",
+    "translator"
+  ],
+  "description": "Translate selected text to any language. Select text first, then say 'Translate selection to [language] language'.",
+  "instructions": "Get your OpenAI API key: https://platform.openai.com/api-keys\n\nUsage:\n1. Select text in any application\n2. Say 'Translate selection to Spanish language'\n3. The translated text will be pasted\n\nThe prompt uses {language} placeholder.",
+  "hooks": ["before_paste"],
+  "dependencies": [],
+  "trigger": {
+    "pattern": "^Translate selection to ([A-Za-z]{1,15}) language$",
+    "matchType": "regex"
+  },
+  "settings": [
+    {
+      "type": "input",
+      "name": "api_key",
+      "label": "OpenAI API key",
+      "placeholder": "sk-...",
+      "required": true
+    },
+    {
+      "type": "input",
+      "name": "model",
+      "label": "Model",
+      "default": "gpt-5-mini",
+      "help_text": "OpenAI model to use (e.g., gpt-5-mini, gpt-4o-mini, gpt-4o)"
+    },
+    {
+      "type": "input",
+      "name": "prompt",
+      "label": "Prompt",
+      "rows": 4,
+      "default": "Translate the following text to {language}. Output only the translation, nothing else.",
+      "help_text": "Use {language} for target language. The selected text will be sent as user content."
+    }
+  ]
+}
