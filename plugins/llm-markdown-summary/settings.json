@@ -1,0 +1,8 @@
+{
+  "active": true,
+  "rank": 1,
+  "settings": {
+    "api_key": "sk-XXXX",
+    "model": "gpt-5-nano"
+  }
+}
