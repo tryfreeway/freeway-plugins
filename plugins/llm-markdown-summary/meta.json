@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "id": "llm-markdown-summary",
+  "name": "Markdown Summary (OpenAI)",
+  "description": "Summarizes pasted or transcribed text into Markdown.",
+  "hooks": ["before_paste"],
+  "dependencies": [],
+  "settings": [
+    {
+      "type": "input",
+      "name": "api_key",
+      "label": "OpenAI API key",
+      "placeholder": "sk-...",
+      "required": true
+    },
+    {
+      "type": "input",
+      "name": "model",
+      "label": "Model",
+      "default": "gpt-5-nano"
+    }
+  ]
+}
