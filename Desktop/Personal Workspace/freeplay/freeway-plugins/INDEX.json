@@ -1,0 +1,154 @@
+{
+  "version": 2,
+  "updated_at": "2026-02-06T00:00:00Z",
+  "items": [
+    {
+      "featured": true,
+      "id": "jagan-gemini-formatter",
+      "name": "Jagan Gemini Formatter (Gemini)",
+      "version": 1,
+      "created_at": "2026-01-14T00:00:00Z",
+      "updated_at": "2026-01-14T00:00:00Z",
+      "categories": [
+        "Text Processing"
+      ],
+      "author": {
+        "name": "Freeway Team",
+        "url": "https://tryfreeway.com"
+      },
+      "contributors": [
+        "tryfreeway"
+      ],
+      "tags": [
+        "gemini",
+        "text-formatter"
+      ],
+      "description": "Start speaking with \"I want to create...\" and your voice input will be processed and formatted using the Gemini API.\nInspired by Mr. Jagan request.",
+      "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/jagan-gemini-formatter",
+      "compatibility": [],
+      "hooks": [
+        "before_paste"
+      ]
+    },
+    {
+      "id": "openai-hey-freeway",
+      "name": "Hey Freeway (OpenAI)",
+      "version": 1,
+      "featured": true,
+      "created_at": "2026-01-17T00:00:00Z",
+      "updated_at": "2026-01-17T00:00:00Z",
+      "categories": [
+        "AI Assistant"
+      ],
+      "author": {
+        "name": "Freeway Team",
+        "url": "https://tryfreeway.com"
+      },
+      "contributors": [
+        "tryfreeway"
+      ],
+      "tags": [
+        "openai",
+        "assistant"
+      ],
+      "description": "Ask Freeway anything. Say \"Hey Freeway [your question]\".",
+      "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/openai-hey-freeway",
+      "compatibility": [],
+      "hooks": [
+        "before_paste"
+      ]
+    },
+    {
+      "id": "openai-image-generator",
+      "name": "Create Image (OpenAI)",
+      "version": 1,
+      "featured": true,
+      "created_at": "2026-01-17T00:00:00Z",
+      "updated_at": "2026-01-17T00:00:00Z",
+      "categories": [
+        "Image Generation"
+      ],
+      "author": {
+        "name": "Freeway Team",
+        "url": "https://tryfreeway.com"
+      },
+      "contributors": [
+        "tryfreeway"
+      ],
+      "tags": [
+        "openai",
+        "image"
+      ],
+      "description": "Generate images and copy them to clipboard. Say 'Create image [description]'.",
+      "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/openai-image-generator",
+      "compatibility": [],
+      "hooks": [
+        "before_paste"
+      ]
+    },
+    {
+      "id": "openai-selection-translator",
+      "name": "Translate Selection (OpenAI)",
+      "version": 1,
+      "featured": true,
+      "created_at": "2026-01-17T00:00:00Z",
+      "updated_at": "2026-01-17T00:00:00Z",
+      "categories": [
+        "Text Processing",
+        "Translation"
+      ],
+      "author": {
+        "name": "Freeway Team",
+        "url": "https://tryfreeway.com"
+      },
+      "contributors": [
+        "tryfreeway"
+      ],
+      "tags": [
+        "openai",
+        "translator"
+      ],
+      "description": "Translate selected text to any language. Select text first, then say 'Translate selection to Spanish'.",
+      "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/openai-selection-translator",
+      "compatibility": [],
+      "hooks": [
+        "before_paste"
+      ]
+    },
+    {
+      "id": "devops-cicd-generator",
+      "name": "DevOps & CI/CD Generator",
+      "version": 1,
+      "featured": true,
+      "created_at": "2026-02-06T00:00:00Z",
+      "updated_at": "2026-02-06T00:00:00Z",
+      "categories": [
+        "DevOps",
+        "CI/CD",
+        "Infrastructure"
+      ],
+      "author": {
+        "name": "Mushhood Afsar",
+        "url": "https://www.linkedin.com/company/nesttechsolutions/"
+      },
+      "contributors": [
+        "tryfreeway"
+      ],
+      "tags": [
+        "devops",
+        "docker",
+        "cicd",
+        "github-actions",
+        "azure-devops",
+        "nginx",
+        "infrastructure"
+      ],
+      "description": "Generate complete DevOps infrastructure files (Dockerfile, docker-compose, CI/CD pipelines, Nginx config, deployment scripts) from your tech stack description. Say 'I have Node.js and PostgreSQL' to get production-ready DevOps configurations.",
+      "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/devops-cicd-generator",
+      "compatibility": [],
+      "hooks": [
+        "before_paste"
+      ]
+    }
+  ]
+}

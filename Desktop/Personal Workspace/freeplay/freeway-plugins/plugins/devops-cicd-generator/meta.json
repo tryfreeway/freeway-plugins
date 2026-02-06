@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "id": "devops-cicd-generator",
+  "created_at": "2026-02-06T00:00:00Z",
+  "updated_at": "2026-02-06T00:00:00Z",
+  "name": "DevOps & CI/CD Generator",
+  "featured": true,
+  "author": {
+    "name": "Mushhood Afsar",
+    "url": "https://www.linkedin.com/company/nesttechsolutions/",
+    "email": "mushhoodyousafzai@gmail.com"
+  },
+  "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/devops-cicd-generator",
+  "contributors": [
+    "tryfreeway"
+  ],
+  "compatibility": [],
+  "categories": [
+    "DevOps",
+    "CI/CD",
+    "Infrastructure"
+  ],
+  "tags": [
+    "devops",
+    "docker",
+    "cicd",
+    "github-actions",
+    "azure-devops",
+    "nginx",
+    "infrastructure"
+  ],
+  "description": "Generate complete DevOps infrastructure files (Dockerfile, docker-compose, CI/CD pipelines, Nginx config, deployment scripts) from your tech stack description. Say 'I have Node.js and PostgreSQL' to get production-ready DevOps configurations.",
+  "instructions": "Get your OpenAI API key: https://platform.openai.com/api-keys\n\nUsage:\n1. Say 'I have [your tech stack]' (e.g., 'I have .NET Core + Angular + PostgreSQL')\n2. The plugin will generate:\n   - Dockerfile\n   - docker-compose.yml\n   - GitHub Actions workflow\n   - Azure DevOps pipeline\n   - Nginx configuration\n   - Deployment script\n   - Logging configuration\n\nAll files are ready to copy and paste into your project.\n\nThe prompt template uses {tech_stack} placeholder which will be replaced with your input.",
+  "hooks": ["before_paste"],
+  "dependencies": [],
+  "trigger": {
+    "pattern": "I have",
+    "matchType": "startsWith"
+  },
+  "settings": [
+    {
+      "type": "input",
+      "name": "api_key",
+      "label": "OpenAI API key",
+      "placeholder": "sk-...",
+      "required": true
+    },
+    {
+      "type": "input",
+      "name": "model",
+      "label": "Model",
+      "default": "gpt-4o-mini",
+      "help_text": "OpenAI model to use. Recommended: gpt-4o-mini (cost-effective) or gpt-4o (higher quality)"
+    },
+    {
+      "type": "input",
+      "name": "prompt_template",
+      "label": "Prompt Template",
+      "rows": 12,
+      "default": "You are a DevOps expert. Generate complete, production-ready DevOps infrastructure files for the following tech stack: {tech_stack}\n\nGenerate the following files with proper formatting, comments, and best practices:\n\n1. **Dockerfile** - Optimized, multi-stage build if applicable\n2. **docker-compose.yml** - Complete service orchestration with all dependencies\n3. **.github/workflows/ci.yml** - GitHub Actions CI/CD pipeline\n4. **azure-pipelines.yml** - Azure DevOps CI/CD pipeline\n5. **nginx.conf** - Reverse proxy configuration for production\n6. **deploy.sh** - Production deployment script\n7. **logging.conf** or appropriate logging configuration\n\nFormat the output exactly as follows (use === headers for each file):\n\n=== Dockerfile ===\n[complete Dockerfile content with comments]\n\n=== docker-compose.yml ===\n[complete docker-compose.yml content]\n\n=== .github/workflows/ci.yml ===\n[complete GitHub Actions workflow]\n\n=== azure-pipelines.yml ===\n[complete Azure DevOps pipeline]\n\n=== nginx.conf ===\n[complete Nginx configuration]\n\n=== deploy.sh ===\n[complete deployment script]\n\n=== logging.conf ===\n[complete logging configuration]\n\nImportant requirements:\n- Use production best practices\n- Include proper error handling\n- Add helpful comments\n- Ensure all configurations are valid and ready to use\n- Consider security best practices\n- Optimize for performance\n- Include environment variable support where appropriate\n\nTech Stack: {tech_stack}",
+      "help_text": "Customize the prompt sent to AI. Use {tech_stack} placeholder which will be replaced with the user's tech stack description."
+    }
+  ]
+}
+
