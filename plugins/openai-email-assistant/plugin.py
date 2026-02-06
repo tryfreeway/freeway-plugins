@@ -1,12 +1,48 @@
 import json
+import os
 import re
 import urllib.error
 import urllib.request
+from datetime import datetime
 
 import freeway
 
 
 SYSTEM_PROMPT = "You are an assistant that writes email drafts."
+
+
+def _get_log_file_path() -> str:
+    """Get the path for the log file in the plugin directory."""
+    plugin_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(plugin_dir, "openai-email-assistant.log")
+
+
+
+
+
+def _log_to_file(message: str, level: str = "INFO"):
+    """Write a message to the log file with timestamp."""
+    # Check if logging is enabled in settings
+    enable_logging = freeway.get_setting("enable_logging") == "true"
+    if not enable_logging:
+        return
+
+    try:
+        log_file = _get_log_file_path()
+
+        # Create directory if it doesn't exist
+        log_dir = os.path.dirname(log_file)
+        if log_dir and not os.path.exists(log_dir):
+            os.makedirs(log_dir, exist_ok=True)
+
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"[{timestamp}] [{level}] {message}\n"
+
+        with open(log_file, "a", encoding="utf-8") as f:
+            f.write(log_entry)
+    except Exception as e:
+        # If logging fails, don't interrupt the main functionality
+        freeway.log(f"Failed to write to log file: {e}")
 
 
 def _strip_trigger_prefix(text: str, pattern: str) -> str:
@@ -20,10 +56,12 @@ def _strip_trigger_prefix(text: str, pattern: str) -> str:
         tokens = pattern_normalized.split()
         if not tokens:
             return text
-        regex_pattern = r"^\s*" + r"[^\w]*".join(re.escape(t) for t in tokens) + r"[^\w]*"
+        regex_pattern = (
+            r"^\s*" + r"[^\w]*".join(re.escape(t) for t in tokens) + r"[^\w]*"
+        )
         match = re.match(regex_pattern, text, re.IGNORECASE)
         if match:
-            return text[match.end():].lstrip()
+            return text[match.end() :].lstrip()
 
     return text
 
@@ -72,20 +110,75 @@ def _parse_subject_body(text: str):
     subject = None
     body = None
 
-    lines = [line.rstrip() for line in text.splitlines()]
+    lines = [line.strip() for line in text.splitlines()]
+    # Filter empty lines for easier processing, but keep indices correct?
+    # actually, simple state machine is better
+    
+    current_section = None
+    subject_lines = []
+    body_lines = []
+    
+    # First pass: try to find 'Subject:' and 'Body:' markers
+    subject_start = -1
+    body_start = -1
+    
     for i, line in enumerate(lines):
-        if line.lower().startswith("subject:"):
-            subject = line.split(":", 1)[1].strip()
-            remaining = lines[i + 1 :]
-            if remaining:
-                if remaining[0].lower().startswith("body:"):
-                    remaining = remaining[1:]
-                body = "\n".join(remaining).strip()
-            break
+        if not line: continue
+        if line.lower().startswith("subject:") and subject_start == -1:
+            subject_start = i
+        elif line.lower().startswith("body:") and body_start == -1:
+            body_start = i
 
+    if subject_start != -1:
+        # Extract subject
+        subject_line = lines[subject_start]
+        subject = subject_line.split(":", 1)[1].strip()
+        
+        # Determine where body starts
+        if body_start != -1 and body_start > subject_start:
+            # Body is explicitly marked after subject
+            body = "\n".join(lines[body_start + 1:]).strip()
+        else:
+            # Assume everything after subject line is body
+            remaining = lines[subject_start + 1:]
+            # If the very next line is empty, skip it? .strip() handles that
+            body = "\n".join(remaining).strip()
+    
+    elif body_start != -1:
+        # No subject, but Body: marked
+        body = "\n".join(lines[body_start + 1:]).strip()
+        
+    else:
+        # No markers found, treat as body? Or maybe title is first line?
+        # The prompt asks for "Subject: ... Body: ..." so we should stick to that.
+        # But if fail, maybe first line is subject?
+        # Let's keep original fallback logic for no markers if needed, but the issue was specifically about gaps.
+        pass
+
+    # Simplified approach that handles the specific bug (gap between subject and body)
+    if subject is None:
+        # Retry with simpler parsing
+        for i, line in enumerate(lines):
+            if line.lower().startswith("subject:"):
+                subject = line.split(":", 1)[1].strip()
+                # Everything after this line is potentially body, skipping "Body:" marker if present
+                remaining_lines = lines[i+1:]
+                
+                # Filter out "Body:" marker if it's the start of the content
+                clean_remaining = []
+                body_marker_found = False
+                for r_line in remaining_lines:
+                    if not body_marker_found and r_line.lower().startswith("body:"):
+                        body_marker_found = True
+                        continue # Skip the "Body:" line
+                    clean_remaining.append(r_line)
+                
+                body = "\n".join(clean_remaining).strip()
+                break
+    
     if subject is None and lines and lines[0].lower().startswith("body:"):
-        body = "\n".join(lines[1:]).strip()
-
+         body = "\n".join(lines[1:]).strip()
+         
     return subject, body
 
 
@@ -117,7 +210,9 @@ def _extract_recipient_and_topic(text: str):
         recipient = match.group(1).strip()[3:].strip()
         cleaned = match.group(2).strip()
 
-    topic_match = re.match(r"^(about|regarding|re:?)\s+(.*)$", cleaned, flags=re.IGNORECASE)
+    topic_match = re.match(
+        r"^(about|regarding|re:?)\s+(.*)$", cleaned, flags=re.IGNORECASE
+    )
     if topic_match:
         topic = topic_match.group(2).strip()
         cleaned = topic
@@ -137,10 +232,15 @@ def before_paste():
     api_key = freeway.get_setting("api_key")
     model = freeway.get_setting("model") or "gpt-5-nano"
     tone = freeway.get_setting("tone") or "professional"
+    signature = freeway.get_setting("signature") or "Best regards,\nFreeway User"
+
+    # Log session start
+    _log_to_file(f"Email assistant session started - Model: {model}, Tone: {tone}")
 
     original_text = freeway.get_text()
     if not original_text or not original_text.strip():
         freeway.log("No text to process.")
+        _log_to_file("No text to process", "WARNING")
         return
 
     trigger = freeway.get_trigger()
@@ -149,16 +249,18 @@ def before_paste():
 
     if not payload:
         freeway.log("No payload after trigger; skipping.")
+        _log_to_file("No payload after trigger", "WARNING")
         return
 
     prompt = (
         "Convert the following into a complete email with subject and body.\n"
         f"Tone: {tone}\n"
+        "Do not include a signature or sign-off at the end, just the body text.\n"
         "Output format:\n"
         "Subject: <one line>\n"
         "Body:\n"
         "<multi-line email body>\n\n"
-        f"Input:\n\"{payload}\""
+        f'Input:\n"{payload}"'
     )
 
     subject = None
@@ -176,21 +278,37 @@ def before_paste():
                 body = parsed_body
             if not body:
                 body = response_text
+            # Append signature to AI-generated body
+            if body and signature:
+                body = f"{body}\n\n{signature}"
             freeway.log(f"Draft generated with {model}.")
+            _log_to_file(
+                f"AI email generated - Subject: {subject or 'N/A'}, Model: {model}"
+            )
         except Exception as exc:
             freeway.log(f"OpenAI error: {exc}")
+            _log_to_file(f"OpenAI API error: {exc}", "ERROR")
             subject = None
             body = None
     else:
         freeway.log("OpenAI API key is missing; using fallback.")
+        _log_to_file("OpenAI API key missing, using fallback method")
 
     if not body:
         recipient, topic, remaining = _extract_recipient_and_topic(payload)
         subject = subject or (topic if topic else _fallback_subject(remaining))
         body = _fallback_body(remaining or payload, recipient=recipient)
+        # Append signature to fallback body
+        if body and signature:
+            body = f"{body}\n\n{signature}"
     if not subject:
         subject = _fallback_subject(body)
 
     formatted = f"Subject: {subject}\n\nBody:\n{body}"
     freeway.set_text(formatted)
     freeway.set_status_text("✓ Email draft ready")
+
+    # Log completion
+    _log_to_file(
+        f"Email draft completed - Subject: {subject}, Method: {'AI' if api_key else 'Fallback'}"
+    )

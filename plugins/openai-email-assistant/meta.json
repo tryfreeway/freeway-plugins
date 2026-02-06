@@ -26,7 +26,9 @@
   ],
   "description": "Draft polished email text using AI from voice input.",
   "instructions": "Get your OpenAI API key: https://platform.openai.com/api-keys\n\nUsage: Say 'Draft email ...' and the plugin will generate a subject and body.",
-  "hooks": ["before_paste"],
+  "hooks": [
+    "before_paste"
+  ],
   "dependencies": [],
   "trigger": {
     "pattern": "Draft email",
@@ -46,8 +48,14 @@
       "label": "Model",
       "default": "gpt-5-nano",
       "options": [
-        {"value": "gpt-5-nano", "label": "Fast (gpt-5-nano)"},
-        {"value": "gpt-5-mini", "label": "Higher quality (gpt-5-mini)"}
+        {
+          "value": "gpt-5-nano",
+          "label": "Fast (gpt-5-nano)"
+        },
+        {
+          "value": "gpt-5-mini",
+          "label": "Higher quality (gpt-5-mini)"
+        }
       ]
     },
     {
@@ -56,10 +64,45 @@
       "label": "Preferred tone",
       "default": "professional",
       "options": [
-        {"value": "professional", "label": "Professional"},
-        {"value": "casual", "label": "Casual"},
-        {"value": "concise", "label": "Concise"}
+        {
+          "value": "professional",
+          "label": "Professional"
+        },
+        {
+          "value": "casual",
+          "label": "Casual"
+        },
+        {
+          "value": "concise",
+          "label": "Concise"
+        }
       ]
+    },
+    {
+      "type": "input",
+      "name": "signature",
+      "label": "Email signature",
+      "placeholder": "Best regards,\nYour Name",
+      "default": "Best regards,\nFreeway User",
+      "rows": 3
     }
+    // ,
+    // {
+    //   "type": "select",
+    //   "name": "enable_logging",
+    //   "label": "Enable file logging",
+    //   "default": "true",
+    //   "options": [
+    //     {
+    //       "value": "true",
+    //       "label": "Enable"
+    //     },
+    //     {
+    //       "value": "false",
+    //       "label": "Disable"
+    //     }
+    //   ],
+    //   "help_text": "Enable detailed logging to file in plugin folder for debugging and analytics. Only enable during development/testing."
+    // }
   ]
 }
