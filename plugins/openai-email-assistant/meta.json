@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "openai-email-assistant",
+  "created_at": "2026-02-06T00:00:00Z",
+  "updated_at": "2026-02-06T00:00:00Z",
+  "name": "OpenAI Email Assistant",
+  "featured": false,
+  "author": {
+    "name": "Muhammad Mehdi",
+    "url": "https://github.com/arsalanj/Mobile-Developer-Portfolio",
+    "email": "arsalanjaf@gmail.com"
+  },
+  "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/openai-email-assistant",
+  "contributors": [
+    "tryfreeway"
+  ],
+  "compatibility": [],
+  "categories": [
+    "AI Assistant",
+    "Text Processing"
+  ],
+  "tags": [
+    "openai",
+    "email",
+    "assistant"
+  ],
+  "description": "Draft polished email text using AI from voice input.",
+  "instructions": "Get your OpenAI API key: https://platform.openai.com/api-keys\n\nUsage: Say 'Draft email ...' and the plugin will generate a subject and body.",
+  "hooks": [
+    "before_paste"
+  ],
+  "dependencies": [],
+  "trigger": {
+    "pattern": "Draft email",
+    "matchType": "startsWith"
+  },
+  "settings": [
+    {
+      "type": "input",
+      "name": "api_key",
+      "label": "OpenAI API key",
+      "placeholder": "sk-...",
+      "required": false
+    },
+    {
+      "type": "select",
+      "name": "model",
+      "label": "Model",
+      "default": "gpt-5-nano",
+      "options": [
+        {
+          "value": "gpt-5-nano",
+          "label": "Fast (gpt-5-nano)"
+        },
+        {
+          "value": "gpt-5-mini",
+          "label": "Higher quality (gpt-5-mini)"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "name": "tone",
+      "label": "Preferred tone",
+      "default": "professional",
+      "options": [
+        {
+          "value": "professional",
+          "label": "Professional"
+        },
+        {
+          "value": "casual",
+          "label": "Casual"
+        },
+        {
+          "value": "concise",
+          "label": "Concise"
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "name": "signature",
+      "label": "Email signature",
+      "placeholder": "Best regards,\nYour Name",
+      "default": "Best regards,\nFreeway User",
+      "rows": 3
+    }
+  ]
+}
