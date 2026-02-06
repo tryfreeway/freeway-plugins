@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-01-17T00:00:00Z",
+  "updated_at": "2026-02-06T00:00:00Z",
   "items": [
     {
       "featured": true,
@@ -110,6 +110,36 @@
       ],
       "description": "Translate selected text to any language. Select text first, then say 'Translate selection to Spanish'.",
       "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/openai-selection-translator",
+      "compatibility": [],
+      "hooks": [
+        "before_paste"
+      ]
+    },
+    {
+      "id": "openai-email-assistant",
+      "name": "OpenAI Email Assistant",
+      "version": 1,
+      "featured": false,
+      "created_at": "2026-02-06T00:00:00Z",
+      "updated_at": "2026-02-06T00:00:00Z",
+      "categories": [
+        "AI Assistant",
+        "Text Processing"
+      ],
+      "author": {
+        "name": "Freeway Team",
+        "url": "https://tryfreeway.com"
+      },
+      "contributors": [
+        "tryfreeway"
+      ],
+      "tags": [
+        "openai",
+        "email",
+        "assistant"
+      ],
+      "description": "Draft polished email text using AI from voice input.",
+      "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/openai-email-assistant",
       "compatibility": [],
       "hooks": [
         "before_paste"
