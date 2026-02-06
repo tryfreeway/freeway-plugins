@@ -1,48 +1,14 @@
 import json
-import os
+
 import re
 import urllib.error
 import urllib.request
-from datetime import datetime
+
 
 import freeway
 
 
 SYSTEM_PROMPT = "You are an assistant that writes email drafts."
-
-
-def _get_log_file_path() -> str:
-    """Get the path for the log file in the plugin directory."""
-    plugin_dir = os.path.dirname(os.path.abspath(__file__))
-    return os.path.join(plugin_dir, "openai-email-assistant.log")
-
-
-
-
-
-def _log_to_file(message: str, level: str = "INFO"):
-    """Write a message to the log file with timestamp."""
-    # Check if logging is enabled in settings
-    enable_logging = freeway.get_setting("enable_logging") == "true"
-    if not enable_logging:
-        return
-
-    try:
-        log_file = _get_log_file_path()
-
-        # Create directory if it doesn't exist
-        log_dir = os.path.dirname(log_file)
-        if log_dir and not os.path.exists(log_dir):
-            os.makedirs(log_dir, exist_ok=True)
-
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        log_entry = f"[{timestamp}] [{level}] {message}\n"
-
-        with open(log_file, "a", encoding="utf-8") as f:
-            f.write(log_entry)
-    except Exception as e:
-        # If logging fails, don't interrupt the main functionality
-        freeway.log(f"Failed to write to log file: {e}")
 
 
 def _strip_trigger_prefix(text: str, pattern: str) -> str:
@@ -234,13 +200,12 @@ def before_paste():
     tone = freeway.get_setting("tone") or "professional"
     signature = freeway.get_setting("signature") or "Best regards,\nFreeway User"
 
-    # Log session start
-    _log_to_file(f"Email assistant session started - Model: {model}, Tone: {tone}")
+
 
     original_text = freeway.get_text()
     if not original_text or not original_text.strip():
         freeway.log("No text to process.")
-        _log_to_file("No text to process", "WARNING")
+
         return
 
     trigger = freeway.get_trigger()
@@ -249,7 +214,7 @@ def before_paste():
 
     if not payload:
         freeway.log("No payload after trigger; skipping.")
-        _log_to_file("No payload after trigger", "WARNING")
+
         return
 
     prompt = (
@@ -282,17 +247,15 @@ def before_paste():
             if body and signature:
                 body = f"{body}\n\n{signature}"
             freeway.log(f"Draft generated with {model}.")
-            _log_to_file(
-                f"AI email generated - Subject: {subject or 'N/A'}, Model: {model}"
-            )
+
         except Exception as exc:
             freeway.log(f"OpenAI error: {exc}")
-            _log_to_file(f"OpenAI API error: {exc}", "ERROR")
+
             subject = None
             body = None
     else:
         freeway.log("OpenAI API key is missing; using fallback.")
-        _log_to_file("OpenAI API key missing, using fallback method")
+
 
     if not body:
         recipient, topic, remaining = _extract_recipient_and_topic(payload)
@@ -308,7 +271,4 @@ def before_paste():
     freeway.set_text(formatted)
     freeway.set_status_text("✓ Email draft ready")
 
-    # Log completion
-    _log_to_file(
-        f"Email draft completed - Subject: {subject}, Method: {'AI' if api_key else 'Fallback'}"
-    )
+

@@ -86,23 +86,5 @@
       "default": "Best regards,\nFreeway User",
       "rows": 3
     }
-    // ,
-    // {
-    //   "type": "select",
-    //   "name": "enable_logging",
-    //   "label": "Enable file logging",
-    //   "default": "true",
-    //   "options": [
-    //     {
-    //       "value": "true",
-    //       "label": "Enable"
-    //     },
-    //     {
-    //       "value": "false",
-    //       "label": "Disable"
-    //     }
-    //   ],
-    //   "help_text": "Enable detailed logging to file in plugin folder for debugging and analytics. Only enable during development/testing."
-    // }
   ]
 }
