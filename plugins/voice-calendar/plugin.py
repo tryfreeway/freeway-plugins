@@ -122,6 +122,12 @@ def create_calendar_event(item):
     except:
         return False
 
+def core_process(input_text, settings_dict=None):
+    if not input_text:
+        return None
+
+    import unicodedata
+    input_text = unicodedata.normalize('NFC', input_text)
     
     import re
     input_text = re.sub(r"^(?i)(эй|hey)[,\s]*", "", input_text).strip()
@@ -173,6 +179,7 @@ def create_calendar_event(item):
         return f"API Error: {str(e)}"
 
     try:
+        json_str = content
         if "```json" in content:
             json_str = content.split("```json")[1].split("```")[0].strip()
         elif "```" in content:
