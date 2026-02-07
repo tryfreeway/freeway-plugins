@@ -1,0 +1,42 @@
+{
+    "id": "voice-calendar",
+    "version": 1,
+    "name": "Voice-to-Calendar (OpenAI)",
+    "description": "Create calendar events effortlessly. Just say 'Эй' (Hey) followed by your meeting details.",
+    "categories": [
+        "Productivity",
+        "AI Assistant"
+    ],
+    "tags": [
+        "openai",
+        "calendar",
+        "russian"
+    ],
+    "trigger": {
+        "pattern": "^(?i)(эй|hey)",
+        "matchType": "regex"
+    },
+    "author": {
+        "name": "indozer",
+        "email": "indozer@proton.me"
+    },
+    "hooks": [
+        "before_paste"
+    ],
+    "dependencies": [],
+    "settings": [
+        {
+            "type": "input",
+            "name": "openai_api_key",
+            "label": "OpenAI API Key",
+            "placeholder": "sk-...",
+            "required": true
+        },
+        {
+            "type": "input",
+            "name": "model",
+            "label": "Model",
+            "default": "gpt-4o-mini"
+        }
+    ]
+}

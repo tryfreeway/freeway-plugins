@@ -114,6 +114,36 @@
       "hooks": [
         "before_paste"
       ]
+    },
+    {
+      "id": "voice-calendar",
+      "name": "Voice-to-Calendar (OpenAI)",
+      "version": 1,
+      "featured": false,
+      "created_at": "2026-02-07T00:00:00Z",
+      "updated_at": "2026-02-07T00:00:00Z",
+      "categories": [
+        "Productivity",
+        "AI Assistant"
+      ],
+      "author": {
+        "name": "ind0zer",
+        "url": "https://github.com/ind0zer"
+      },
+      "contributors": [
+        "ind0zer"
+      ],
+      "tags": [
+        "openai",
+        "calendar",
+        "russian"
+      ],
+      "description": "Create calendar events effortlessly. Just say 'Эй' (Hey) followed by your meeting details.",
+      "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/voice-calendar",
+      "compatibility": [],
+      "hooks": [
+        "before_paste"
+      ]
     }
   ]
 }
