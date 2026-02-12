@@ -1,0 +1,42 @@
+{
+  "name": "Freeway-Duck",
+  "description": "Detects and censors profanities (alt-profanity-check) for advanced detection and custom word lists.",
+  "instructions": "Configure your censor settings and custom word lists. This plugin uses Machine Learning (alt-profanity-check) for robust detection that goes beyond simple word lists.",
+  "hooks": ["before_paste"],
+  "dependencies": ["alt-profanity-check", "better-profanity"],
+  "author": {
+    "name": "Bilal Hameed",
+    "url": "https://github.com/GopherGhaznix/Freeway-Duck"
+  },
+  "settings": [
+    {
+      "type": "toggle",
+      "name": "enabled",
+      "label": "Enable Profanity Filtering",
+      "default": true
+    },
+    {
+      "type": "input",
+      "name": "censor_char",
+      "label": "Censor Character",
+      "placeholder": "*",
+      "default": "*",
+      "help_text": "The character used to mask profanities (e.g., *, #, @)."
+    },
+    {
+      "type": "input",
+      "name": "custom_words",
+      "label": "Custom Profane Words",
+      "placeholder": "word1, word2, word3",
+      "rows": 3,
+      "help_text": "Comma-separated list of additional words you want to censor."
+    },
+    {
+      "type": "toggle",
+      "name": "block_sentence",
+      "label": "Block Entire Sentence",
+      "default": false,
+      "help_text": "If enabled, blocks the entire sentence containing a profanity instead of just masking the word."
+    }
+  ]
+}
