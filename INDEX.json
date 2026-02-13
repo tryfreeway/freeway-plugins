@@ -1,7 +1,38 @@
 {
   "version": 2,
-  "updated_at": "2026-01-17T00:00:00Z",
+  "updated_at": "2026-02-04T00:00:00Z",
   "items": [
+    {
+      "id": "markdown-note",
+      "name": "Markdown Note",
+      "version": 1,
+      "featured": true,
+      "created_at": "2026-02-04T00:00:00Z",
+      "updated_at": "2026-02-04T00:00:00Z",
+      "categories": [
+        "Text Processing",
+        "Productivity"
+      ],
+      "author": {
+        "name": "Mohamed Darwish",
+        "url": "https://mohamed-darwish.com"
+      },
+      "contributors": [
+        "tryfreeway"
+      ],
+      "tags": [
+        "markdown",
+        "notes",
+        "local",
+        "offline"
+      ],
+      "description": "Convert voice input into structured Markdown notes with title, bullets, and action items. Works offline, no API needed. Say 'Take note [your content]'.",
+      "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/markdown-note",
+      "compatibility": [],
+      "hooks": [
+        "before_paste"
+      ]
+    },
     {
       "featured": true,
       "id": "jagan-gemini-formatter",
