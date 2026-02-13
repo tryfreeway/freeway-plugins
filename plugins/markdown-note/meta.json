@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "id": "markdown-note",
+  "created_at": "2026-02-04T00:00:00Z",
+  "updated_at": "2026-02-04T00:00:00Z",
+  "name": "Markdown Note",
+  "featured": true,
+  "author": {
+    "name": "Mohamed Darwish",
+    "url": "https://mohamed-darwish.com",
+    "email": "muhammedismaildarwish@gmail.com"
+  },
+  "source_url": "https://github.com/tryfreeway/freeway-plugins/tree/main/plugins/markdown-note",
+  "contributors": [
+    "tryfreeway"
+  ],
+  "compatibility": [],
+  "categories": [
+    "Text Processing",
+    "Productivity"
+  ],
+  "tags": [
+    "markdown",
+    "notes",
+    "local",
+    "offline"
+  ],
+  "description": "Convert voice input into structured Markdown notes with title, bullets, and action items. Works offline, no API key needed. Say 'Take note [your content]'.",
+  "instructions": "No setup required! This plugin works locally without any API.\n\nUsage:\n1. Say 'Take note' followed by your content\n2. The plugin will format it as a structured Markdown note\n3. The note includes a title, bullet points, and action items\n\nExample: 'Take note meeting with Sarah discussed Q2 budget need to follow up with finance'\n\nAction item keywords: need to, have to, should, remember to, follow up, make sure",
+  "hooks": ["before_paste"],
+  "dependencies": [],
+  "trigger": {
+    "pattern": "Take note",
+    "matchType": "startsWith"
+  },
+  "settings": []
+}
